@@ -1,0 +1,42 @@
+<div class="p-6 sm:p-8 lg:p-12 xl:p-16 min-h-screen bg-zinc-50">
+
+  <div class="mb-10 fade-in" *ngIf="tasks.length === 0; else tasksContent">
+    <h2 class="text-4xl mb-3">Manejador de tareas</h2>
+    <p class="text-xl text-zinc-800 mb-4">¡Agrega tu primera tarea para comenzar!</p>
+
+    <button class="flex p-3 rounded-full bg-primary-green" (click)="addTask()">
+      <span class="text-4xl leading-none material-symbols-rounded">
+        add
+      </span>
+    </button>
+  </div>
+
+  <ng-template #tasksContent>
+    <h2 class="text-4xl text-center mb-12 font-semibold text-zinc-800 md:hidden">Mis tareas</h2>
+    <div class="flex flex-col md:flex-row items-start gap-8 max-w-screen-xl mx-auto fade-in">
+  
+      <div class="w-full md:w-1/3 order-3 md:order-1 p-4 row-start-1 rounded bg-primary-red/20">
+        <h3 class="text-center text-lg p-2 rounded bg-primary-red">Rechazadas</h3>
+        <app-task *ngFor="let task of getTasks('CANCELED')" [task]="task"></app-task>
+      </div>
+  
+      <div class="w-full md:w-1/3 order-1 md:order-2 p-4 rounded bg-yellow-400/20">
+        <h3 class="flex items-center justify-center gap-3 text-lg p-2 rounded bg-yellow-400">
+          Pendientes 
+          <button class="h-6 w-6 flex items-center bg-white/50 rounded-full" (click)="addTask()">
+            <span class="material-symbols-rounded">
+              add
+            </span>
+          </button>
+        </h3>
+        <app-task *ngFor="let task of getTasks('PENDING')" [task]="task"></app-task>
+      </div>
+  
+      <div class="w-full md:w-1/3 order-2 md:order-3 p-4 rounded bg-primary-green/20">
+        <h3 class="text-center text-lg p-2 rounded bg-primary-green">Completadas</h3>
+        <app-task *ngFor="let task of getTasks('COMPLETED')" [task]="task"></app-task>
+      </div>
+  
+    </div>
+  </ng-template>
+</div>

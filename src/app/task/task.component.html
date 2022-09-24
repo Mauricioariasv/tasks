@@ -1,0 +1,49 @@
+<div class="p-3 mt-6 rounded scale-in-center" [class]="taskColor">
+
+  <div class="flex justify-between items-center">
+
+    <div class="flex items-center gap-3" *ngIf="task.type === 'PENDING'; else delete">
+      <button (click)="updateTask('type', 'CANCELED')" class="h-7 w-7 flex justify-center items-center bg-white/50 rounded">
+        <span class="material-symbols-rounded">
+          close
+        </span>
+      </button>
+      <button (click)="updateTask('type', 'COMPLETED')" class="h-7 w-7 flex justify-center items-center bg-white/50 rounded">
+        <span class="material-symbols-rounded">
+          check
+        </span>
+      </button>
+      <button (click)="anchorTag()" class="h-7 w-7 flex justify-center items-center bg-white/50 rounded" [class.bg-zinc-900]="task.important"  [class.text-white]="task.important">
+        <span class="material-symbols-rounded">
+          bookmark
+        </span>
+      </button>
+    </div>
+    
+    <ng-template #delete>
+      <button (click)="deleteTask()" class="h-7 w-7 flex justify-center items-center bg-white/50 rounded" *ngIf="task.type !== 'PENDING'">
+        <span class="material-symbols-rounded">
+          delete
+        </span>
+      </button>
+    </ng-template>
+
+    <span class="font-sm"> {{task.date | date:'M/d/yy'}} </span>
+
+  </div>
+
+  <input 
+    class="w-full truncate p-3 bg-transparent border-b border-zinc-800 mb-4 mt-2 font-semibold"
+    (input)="updateTask('title', task.title)"
+    type="text" 
+    [(ngModel)]="task.title" 
+    placeholder="Título de la tarea"
+  />
+  <textarea  
+    class="w-full p-3 bg-transparent border-b border-zinc-800"
+    (input)="updateTask('content', task.content)" 
+    [(ngModel)]="task.content" 
+    placeholder="Empieza a escribir acá..."
+    rows="4"
+  ></textarea>
+</div>
